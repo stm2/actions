@@ -19,7 +19,7 @@ jobs:
       - uses: meeDamian/github-release@2.0
         with:
           prerelease: true
-          allow_override: false
+          allow_override: true
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: latest
           name: My Creative Name
