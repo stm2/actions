@@ -28,8 +28,5 @@ jobs:
             while applying, as error in database migration, can irrecoverably wipe 
             some laws of physics.  
           gzip: folders
-          files: >
-            LICENSE.txt
-            content.txt
-            README.md
+          files: README.md
 
