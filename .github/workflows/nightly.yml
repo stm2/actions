@@ -16,15 +16,20 @@ jobs:
         run: |
           echo "done!"
 
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - uses: meeDamian/github-release@2.0
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
           prerelease: true
-          title: "Development Build"
-          description: Bla 1
-          files: |
+          allow_override: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.MY_CUSTOM_TAG }}
+          name: My Creative Name
+          body: >
+            This release actually changes the fabric of the reality, so be careful 
+            while applying, as error in database migration, can irrecoverably wipe 
+            some laws of physics.  
+          gzip: folders
+          files: >
             LICENSE.txt
             content.txt
-            *.jar
-            
+            README.md
+
