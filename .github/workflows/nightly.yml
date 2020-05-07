@@ -12,6 +12,7 @@ jobs:
 
     steps:
       # ...
+      - uses: actions/checkout@v1
       - name: "Build & test"
         run: |
           echo "done!"
@@ -28,5 +29,8 @@ jobs:
             while applying, as error in database migration, can irrecoverably wipe 
             some laws of physics.  
           gzip: folders
-          files: README.md
+          files: >
+            README.md
+            LICENSE.txt
+            content.txt
 
