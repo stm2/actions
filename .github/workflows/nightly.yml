@@ -22,6 +22,7 @@ jobs:
           automatic_release_tag: "latest"
           prerelease: true
           title: "Development Build"
+          description: Bla 1
           files: |
             LICENSE.txt
             content.txt
