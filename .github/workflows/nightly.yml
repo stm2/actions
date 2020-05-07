@@ -20,9 +20,10 @@ jobs:
       - uses: meeDamian/github-release@2.0
         with:
           prerelease: true
+          draft: false
           allow_override: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: latest
+          # tag: latest
           name: My Creative Name
           body: >
             This release actually changes the fabric of the reality, so be careful 
