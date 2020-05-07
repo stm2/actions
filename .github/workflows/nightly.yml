@@ -21,7 +21,7 @@ jobs:
           prerelease: true
           allow_override: false
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.MY_CUSTOM_TAG }}
+          tag: latest
           name: My Creative Name
           body: >
             This release actually changes the fabric of the reality, so be careful 
