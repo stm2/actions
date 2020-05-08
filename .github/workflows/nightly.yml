@@ -20,7 +20,7 @@ jobs:
           TAG="$(echo "$GITHUB_REF" | awk -F/ '{print $NF}')"
           echo "::set-env name=TAG::$TAG"
           echo $TAG
-          echo "::set-env name=VERSION::$(cat VERSION)"
+          echo "::set-env name=VERSION::$(cat VERSION)-v"
           echo "::set-output name=basic::$(cat VERSION)"
 
       - name: "Sanity check"
