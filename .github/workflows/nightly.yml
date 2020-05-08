@@ -17,6 +17,7 @@ jobs:
       - name: Generate version 
         id: get-version
         run: |
+          echo "::set-env name=VERSION::$(cat VERSION)"
           echo "::set-output name=basic::$(cat VERSION)"
           
       - name: "Build & test"
@@ -26,7 +27,12 @@ jobs:
       - name: git
         run: |
           set -x
+          echo $VERSION
+          echo ${{ steps.get-version.outputs.basic }}
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git remote -v
           git tag -f v${{ steps.get-version.outputs.basic }}-latest
+          REMOTE="https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
           git push origin v${{ steps.get-version.outputs.basic }}-latest --force
 
