@@ -36,3 +36,18 @@ jobs:
           REMOTE="https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
           git push --force "$REMOTE" "v${{ steps.get-version.outputs.basic }}-latest"
 
+      - uses: meeDamian/github-release@2.0
+        with:
+          prerelease: true
+          allow_override: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commitish: master
+          tag: v${{ steps.get-version.outputs.basic }}-latest
+          name: Release v${{ steps.get-version.outputs.basic }}
+          body: >
+            This is release v${{ steps.get-version.outputs.basic }}, an unstable build.
+          gzip: folders
+          files: >
+            LICENSE.txt
+            content.txt
+            README.md
