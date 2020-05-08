@@ -23,6 +23,11 @@ jobs:
         run: |
           echo "done!"
 
+      - name: git
+        run: |
+          git remote -v
+          
+
       - uses: meeDamian/github-release@2.0
         with:
           prerelease: true
