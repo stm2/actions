@@ -32,7 +32,7 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git remote -v
-          git tag -f v${{ steps.get-version.outputs.basic }}-latest
+          git tag -f "v${{ steps.get-version.outputs.basic }}-latest"
           REMOTE="https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
-          git push origin v${{ steps.get-version.outputs.basic }}-latest --force
+          git push --forde "$REMOTE" "v${{ steps.get-version.outputs.basic }}-latest"
 
