@@ -20,15 +20,16 @@ jobs:
           TAG="$(echo "$GITHUB_REF" | awk -F/ '{print $NF}')"
           echo "::set-env name=TAG::$TAG"
           echo $TAG
-          echo "::set-env name=VERSION::$(cat VERSION)-v"
+          echo "::set-env name=VERSION::$(cat VERSION)"
           echo "::set-output name=basic::$(cat VERSION)"
 
       - name: "Sanity check"
         run: |
           echo $VERSION
-          if [[ "$VERSION" =~ ^[0-9][0-9]*[.][0-9][0-9]*([.][0-9][0-9]*)* ]]; then
-            echo version okay
+          if [[ "$VERSION" =~ ^[0-9][0-9]*[.][0-9][0-9]*([.][0-9][0-9]*)*$ ]]; then
+            echo version $VERSION okay
           else
+            echo version $VERSION not okay!
             exit 1
           fi
           
@@ -50,3 +51,18 @@ jobs:
           REMOTE="https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
           git push --force "$REMOTE" "v${{ steps.get-version.outputs.basic }}-latest"
 
+      - uses: meeDamian/github-release@2.0
+        with:
+          prerelease: true
+          allow_override: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commitish: master
+          tag: v${{ steps.get-version.outputs.basic }}-latest
+          name: Release v${{ steps.get-version.outputs.basic }}
+          body: >
+            This is release v${{ steps.get-version.outputs.basic }}, an unstable build.
+          gzip: folders
+          files: >
+            LICENSE.txt
+            content.txt
+            README.md
