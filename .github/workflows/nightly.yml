@@ -23,24 +23,18 @@ jobs:
         run: |
           echo "done!"
 
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1 # v1 has a bug, use master to correctly create the body
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      - uses: meeDamian/github-release@2.0
         with:
-          tag_name: v${{ steps.get-version.outputs.basic }}
-          release_name: Release ${{ github.ref }}
-          body: Body for ${{ steps.get-version.outputs.basic }}
           prerelease: true
-
-      - name: Upload file
-        id: upload-release
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: content.txt
-          asset_name: magellan_v${{ steps.get-version.outputs.basic }}.txt
-          asset_content_type: text/plain
+          allow_override: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commitish: master
+          tag: v${{ steps.get-version.outputs.basic }}
+          name: Release v${{ steps.get-version.outputs.basic }}
+          body: >
+            This is release v${{ steps.get-version.outputs.basic }}, an unstable build.
+          gzip: folders
+          files: >
+            LICENSE.txt
+            content.txt
+            README.md
