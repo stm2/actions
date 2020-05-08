@@ -34,5 +34,5 @@ jobs:
           git remote -v
           git tag -f "v${{ steps.get-version.outputs.basic }}-latest"
           REMOTE="https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
-          git push --forde "$REMOTE" "v${{ steps.get-version.outputs.basic }}-latest"
+          git push --force "$REMOTE" "v${{ steps.get-version.outputs.basic }}-latest"
 
