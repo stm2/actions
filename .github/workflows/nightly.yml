@@ -12,26 +12,33 @@ jobs:
 
     steps:
       # ...
+      - name: Generate version 
+        id: get-version
+        run: |
+          echo "::set-output name=basic::$(cat VERSION)"
       - uses: actions/checkout@v1
       - name: "Build & test"
         run: |
           echo "done!"
 
-      - uses: meeDamian/github-release@2.0
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1 # v1 has a bug, use master to correctly create the body
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: Body for ${{ steps.get-version.outputs.basic }}
           prerelease: true
-          draft: false
-          allow_override: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # tag: latest
-          name: My Creative Name
-          body: >
-            This release actually changes the fabric of the reality, so be careful 
-            while applying, as error in database migration, can irrecoverably wipe 
-            some laws of physics.  
-          gzip: folders
-          files: >
-            README.md
-            LICENSE.txt
-            content.txt
 
+      - name: Upload file
+        id: upload-release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: context.txt
+          asset_name: magellan_v${{ steps.get-version.outputs.basic }}.txt
+          asset_content_type: text/plain
