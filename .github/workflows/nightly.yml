@@ -26,6 +26,6 @@ jobs:
       - name: git
         run: |
           git remote -v
-          git tag -f v${{ steps.get-version.outputs.basic }}
-          
+          git tag -f v${{ steps.get-version.outputs.basic }}-latest
+          git push origin v${{ steps.get-version.outputs.basic }}-latest --force
 
