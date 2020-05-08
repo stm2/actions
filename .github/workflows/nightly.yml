@@ -20,7 +20,7 @@ jobs:
           TAG="$(echo "$GITHUB_REF" | awk -F/ '{print $NF}')"
           echo "::set-env name=TAG::$TAG"
           echo $TAG
-          echo "::set-env name=VERSION::$(cat VERSION)-v"
+          echo "::set-env name=VERSION::$(cat VERSION)"
           echo "::set-output name=basic::$(cat VERSION)"
 
       - name: "Sanity check"
@@ -40,7 +40,7 @@ jobs:
       - name: git
         run: |
           set -x
-          echo $VERSION
+          echo ${VERSION}
           echo ${{ steps.get-version.outputs.basic }}
           echo "$GITHUB_REF"
           echo $TAG
@@ -57,8 +57,8 @@ jobs:
           allow_override: true
           token: ${{ secrets.GITHUB_TOKEN }}
           commitish: master
-          tag: v${{ steps.get-version.outputs.basic }}-latest
-          name: Release v${{ steps.get-version.outputs.basic }}
+          tag: v${VERSION}-latest
+          name: Release v${VERSION}
           body: >
             This is release v${{ steps.get-version.outputs.basic }}, an unstable build.
           gzip: folders
