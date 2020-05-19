@@ -78,3 +78,17 @@ jobs:
             LICENSE.txt
             content.txt
             README.md
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TEST }}
+          repository: stm2/triggered
+          event-type: actions-build-trigger
+          client-payload: '{
+              "ref": "${{ github.ref }}", 
+              "sha": "${{ github.sha }}", 
+              "version": "${{ env.VERSION }}" 
+              }'
+
+
