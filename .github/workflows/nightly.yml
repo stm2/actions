@@ -23,11 +23,10 @@ jobs:
           echo "::set-env name=VERSION::$(cat VERSION)"
           echo "::set-output name=basic::$(cat VERSION)"
           value=$(cat difficult.txt | iconv -f ISO-8859-1; echo -e '\n# This is difficult.txt\n\n'; head -20 difficult.txt | iconv -f ISO-8859-1; echo -e '\n...\n' )
-          echo "::set-env name=BODY::$(printf 'Hello!\nWorld!\n')"
-#        value="${value//'%'/'%25'}"
-#        value="${value//'"'/'%22'}"
-#        value="${value//$'\n'/'%0A'}"
-#        value="${value//$'\r'/'%0D'}"
+          value="${value//'%'/'%25'}"
+          value="${value//$'\n'/'%0A'}"
+          value="${value//$'\r'/'%0D'}"
+          echo "::set-env name=BODY::$value"
 
 
       - name: "Sanity check"
